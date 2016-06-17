@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-function Perf({ title }) {
+function Perf({ title, symbols }) {
   return (
     <div className="panel panel-default">
       <div className="panel-heading">
@@ -8,9 +8,9 @@ function Perf({ title }) {
       </div>
       <div className="panel-body">
         <ul>
-          <li>Symbol 1</li>
-          <li>Symbol 2</li>
-          <li>Symbol 3</li>
+          <li>{symbols[0].symbol}</li>
+          <li>{symbols[1].symbol}</li>
+          <li>{symbols[2].symbol}</li>
         </ul>
       </div>
     </div>
@@ -19,6 +19,7 @@ function Perf({ title }) {
 
 Perf.propTypes = {
   title: PropTypes.string.isRequired,
+  symbols: PropTypes.array.isRequired,
 };
 
 export default Perf;

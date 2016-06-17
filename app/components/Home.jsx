@@ -1,5 +1,6 @@
 import React from 'react';
 import * as styles from '../styles/styles';
+import tickers from '../config/tickers';
 import PerfContainer from '../containers/PerfContainer';
 
 function Home() {
@@ -8,20 +9,20 @@ function Home() {
       <div className="row">
         <div className="col-xs-12" style={styles.hcenter}>
           <div className="col-xs-4">
-            <PerfContainer title={"Equites"} />
+            <PerfContainer title={"Equites"} tickers={tickers.equities} />
           </div>
           <div className="col-xs-4">
-            <PerfContainer title={"Credit Risk"} />
+            <PerfContainer title={"Credit Risk"} tickers={tickers.credit} />
           </div>
         </div>
       </div>
       <div className="row">
         <div className="col-xs-12" style={styles.hcenter}>
           <div className="col-xs-4">
-            <PerfContainer title={"Real Estate"} />
+            <PerfContainer title={"Real Estate"} tickers={tickers.realEstate} />
           </div>
           <div className="col-xs-4">
-            <PerfContainer title={"Economic Stress"} />
+            <PerfContainer title={"Economic Stress"} tickers={tickers.econ} />
           </div>
         </div>
       </div>

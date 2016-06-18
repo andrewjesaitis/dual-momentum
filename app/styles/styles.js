@@ -20,3 +20,8 @@ export const hcenter = {
   justifyContent: 'center',
 };
 
+export const symbolList = {
+  textDecoration: 'None',
+  padding: 0,
+};
+

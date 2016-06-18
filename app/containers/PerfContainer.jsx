@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component, PropTypes } from 'react';
+import Loading from '../components/Loading';
 import Perf from '../components/Perf';
 import api from '../helpers/api';
 
@@ -7,8 +8,8 @@ class PerfContainer extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      symbols: [{ symbol: '', currentPrice: 0, annualReturn: 0 }],
+      isLoading: true,
+      symbols: [],
     };
   }
   componentWillMount() {
@@ -18,14 +19,19 @@ class PerfContainer extends Component {
                              return first.annualReturn < second.annualReturn ? 1 : -1;
                            });
                            console.log(resArr);
-                           this.setState({ symbols: resArr });
+                           this.setState({
+                             symbols: resArr,
+                             isLoading: false,
+                           });
                          });
-                           
-    this.setState({ title: this.props.title });
   }
   render() {
     return (
-      <Perf title={this.state.title} symbols={this.state.symbols} />
+      <Perf
+        title={this.props.title}
+        symbols={this.state.symbols}
+        isLoading={this.state.isLoading} 
+      />
     );
   }
 }

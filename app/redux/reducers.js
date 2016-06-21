@@ -1,0 +1,1 @@
+export stocks from './stocks'

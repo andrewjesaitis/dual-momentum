@@ -1,4 +1,5 @@
 import React from 'react';
+import Home from './Home';
 import * as styles from '../styles/styles';
 
 function Navbar() {
@@ -40,17 +41,13 @@ function Navbar() {
   );
 }
 
-function Main({ children }) {
+function Main() {
   return (
     <div className="main-container" style={styles.mainComponent}>
       <Navbar />
-      {children}
+      <Home />
     </div>
   );
 }
-
-Main.propTypes = {
-  children: React.PropTypes.element.isRequired,
-};
 
 export default Main;

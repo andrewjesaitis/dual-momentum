@@ -5,23 +5,24 @@ import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import Main from './components/Main';
-import stocks from './redux/stocks';
+import { stocks } from './redux/stocks';
 
 const loggerMiddleware = createLogger();
 
 const store = createStore(
   combineReducers({
-    stocks
+    stocks,
   }),
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware
   )
-)
+);
 
 ReactDOM.render(
   <Provider store={store}>
     <Main />
-  </Provider>, 
+  </Provider>,
   document.getElementById('app')
 );
+

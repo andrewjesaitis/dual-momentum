@@ -32,15 +32,11 @@ const api = {
         ticker.annualReturn = calculateReturn(ticker.currentPrice,
                                               data[data.length - 1][1]);
         return ticker;
-      })
-      .catch((err) => {
-        console.warn(`Error getting quote for ${symbol.symbol}: ${err}`);
       });
   },
 };
 
 export default api;
-
 
 
 

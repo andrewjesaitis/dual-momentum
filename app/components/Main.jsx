@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from './Home';
+import HomeContainer from '../containers/HomeContainer';
 import * as styles from '../styles/styles';
 
 function Navbar() {
@@ -45,7 +45,7 @@ function Main() {
   return (
     <div className="main-container" style={styles.mainComponent}>
       <Navbar />
-      <Home />
+      <HomeContainer />
     </div>
   );
 }

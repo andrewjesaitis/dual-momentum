@@ -1,22 +1,79 @@
-import { api } from '../helpers/api';
-import { fromJS, Map } from 'immutable';
+import api from '../helpers/api';
+import tickers from '../config/tickers';
+import axios from 'axios';
 
 const FETCHING_STOCKS = 'FETCHING_STOCKS';
-const FETCHING_STOCKS_SUCESS = 'FETCHING_STOCKS_SUCESS';
+const FETCHING_STOCKS_SUCCESS = 'FETCHING_STOCKS_SUCCESS';
 const FETCHING_STOCKS_ERROR = 'FETCHING_STOCKS_ERROR';
 
-const initialStockState = fromJS({
+// Actions
+
+function requestStocks() {
+  console.log("Stock request in progress");
+  return {
+    type: FETCHING_STOCKS,
+    isFetching: true
+  };
+}
+
+function recieveQuotes(quotes) {
+  return {
+    type: FETCHING_STOCKS_SUCCESS,
+    quotes,
+    isFetching: false,
+    lastUpdated: Date.now()
+  }
+}
+
+function fetchingStocksError(error) {
+  return {
+    type: FETCHING_STOCKS_ERROR,
+    isFetching: false,
+    error
+  }
+}
+
+function fetchStocks() {
+  console.log("fetchStocks");
+  return dispatch => {
+    dispatch(requestStocks());
+    return axios.all(tickers.all.map(t => api.getQuote(t)))
+      .then(quotes => dispatch(recieveQuotes(quotes)))
+      .catch(err => dispatch(fetchingStocksError(err)));
+  };
+}
+      
+// Reducer
+const initialStockState = {
   lastUpdated: 0,
   isFetching: false,
-  stocks: [],
-});
+  quotes: [],
+};
 
 
-export default function stocks (state = initialStockState, action) {
+function stocks (state = initialStockState, action) {
   switch (action.type) {
     case FETCHING_STOCKS:
-      return state.set('isFetching', true);
+      return {
+        ...state,
+        isFetching: action.isFetching
+      };
+    case FETCHING_STOCKS_SUCCESS:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        quotes: action.quotes,
+        lastUpdated: action.lastUpdated
+      };
+    case FETCHING_STOCKS_ERROR:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        error: action.error
+      };
     default:
       return state;
   }
 }
+
+export { stocks, fetchStocks };

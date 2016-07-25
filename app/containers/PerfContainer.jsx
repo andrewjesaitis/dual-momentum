@@ -1,36 +1,31 @@
-import axios from 'axios';
 import React, { Component, PropTypes } from 'react';
-import Loading from '../components/Loading';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+
 import Perf from '../components/Perf';
-import api from '../helpers/api';
 
 class PerfContainer extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: true,
-      symbols: [],
-    };
+  constructor(props) {
+    super(props);
+    this.state = { bucket: [] };
   }
-  componentWillMount() {
-    const symbols = axios.all(this.props.tickers.map(t => api.getQuote(t)))
-                         .then(resArr => {
-                           resArr.sort(function(first, second) {
-                             return first.annualReturn < second.annualReturn ? 1 : -1;
-                           });
-                           console.log(resArr);
-                           this.setState({
-                             symbols: resArr,
-                             isLoading: false,
-                           });
-                         });
+
+  componentWillReceiveProps(newProps) {
+    console.log('Quotes:', newProps.quotes);
+    let filtered = _.chain(newProps.quotes)
+                    .filter(q => _.includes(this.props.tickers, q.symbol))
+                    .sortBy(q => -1 * q.annualReturn) //sort descending
+                    .value();
+    console.log('Filtered:', filtered)
+    this.setState({ bucket: filtered });
   }
+
   render() {
     return (
       <Perf
         title={this.props.title}
-        symbols={this.state.symbols}
-        isLoading={this.state.isLoading} 
+        symbols={this.state.bucket}
+        isLoading={this.props.isLoading}
       />
     );
   }
@@ -39,6 +34,15 @@ class PerfContainer extends Component {
 PerfContainer.propTypes = {
   title: PropTypes.string.isRequired,
   tickers: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  quotes: PropTypes.array.isRequired
 };
 
-export default PerfContainer;
+function mapStateToProps({ stocks }) {
+  return {
+    isLoading: stocks.isFetching,
+    quotes: stocks.quotes,
+  };
+}
+
+export default connect(mapStateToProps)(PerfContainer);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as styles from '../styles/styles';
 import tickers from '../config/tickers';
 import PerfContainer from './PerfContainer';
-import Loading from '../components/Loading';
+import PortfolioContainer from './PortfolioContainer';
 import { fetchStocks } from '../redux/stocks';
 
 class Home extends Component {
@@ -34,6 +34,9 @@ class Home extends Component {
               <PerfContainer title={"Economic Stress"} tickers={tickers.econ} />
             </div>
           </div>
+        </div>
+        <div className="row">
+          <PortfolioContainer />
         </div>
       </div>
     );

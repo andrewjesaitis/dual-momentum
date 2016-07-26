@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { addSecurity } from '../redux/portfolio';
 import Perf from '../components/Perf';
 
 class PerfContainer extends Component {
@@ -16,8 +18,8 @@ class PerfContainer extends Component {
                     .filter(q => _.includes(this.props.tickers, q.symbol))
                     .sortBy(q => -1 * q.annualReturn) //sort descending
                     .value();
-    console.log('Filtered:', filtered)
     this.setState({ bucket: filtered });
+    this.props.addSecurity(_.head(filtered).symbol);
   }
 
   render() {
@@ -38,6 +40,10 @@ PerfContainer.propTypes = {
   quotes: PropTypes.array.isRequired
 };
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ addSecurity }, dispatch);
+}
+
 function mapStateToProps({ stocks }) {
   return {
     isLoading: stocks.isFetching,
@@ -45,4 +51,4 @@ function mapStateToProps({ stocks }) {
   };
 }
 
-export default connect(mapStateToProps)(PerfContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PerfContainer);

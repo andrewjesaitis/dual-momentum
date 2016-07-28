@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
+import ChartistGraph from 'react-chartist';
 import * as styles from '../styles/styles';
 import { connect } from 'react-redux';
-
 
 class PortfolioContainer extends Component {
   constructor(props) {
@@ -14,10 +15,23 @@ class PortfolioContainer extends Component {
   }
 
   render() {
+    const data = {
+      labels: _.keys(this.props.securities),
+      series: _.values(this.props.securities),
+    };
+
+    const options = {
+      width: '300px',
+      height: '300px',
+    };
+
     return (
-      <div className="col-xs-12" style={styles.hcenter}>
-        <div className="well col-xs-8" style={styles.hcenter}>
-          {JSON.stringify(this.props.securities, null, 2)}
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title">Optimal Allocation</h3>
+        </div>
+        <div className="panel-body">
+            <ChartistGraph data={data} options={options} type="Pie" />
         </div>
       </div>
     );

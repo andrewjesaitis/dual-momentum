@@ -13,7 +13,7 @@ const loggerMiddleware = createLogger();
 const store = createStore(
   combineReducers({
     stocks,
-    portfolio
+    portfolio,
   }),
   applyMiddleware(
     thunkMiddleware,

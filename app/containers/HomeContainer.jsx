@@ -36,7 +36,11 @@ class Home extends Component {
           </div>
         </div>
         <div className="row">
-          <PortfolioContainer />
+           <div className="col-xs-12" style={styles.hcenter}>
+             <div className="col-xs-8">
+               <PortfolioContainer />
+             </div>
+           </div>
         </div>
       </div>
     );

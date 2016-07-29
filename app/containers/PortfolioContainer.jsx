@@ -1,17 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import ChartistGraph from 'react-chartist';
-import * as styles from '../styles/styles';
 import { connect } from 'react-redux';
 
 class PortfolioContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { securities: {} };
+    this.state = { securities: {}, allocation: [] };
   }
 
   componentWillReceiveProps(newProps) {
-    this.setState({ securities: newProps.securities });
+    const amt = 1000000; //newProps.amount;
+    const allocation = _.transform(newProps.securities, (acc, val, key) => {
+      acc.push([key, val, val / 100.0 * amt]);
+    }, []);
+    this.setState({ securities: newProps.securities, allocation });
+  }
+
+  createRow(item) {
+    const [symbol, percentage, amt] = item;
+    return <tr><td>{symbol}</td><td>{percentage}%</td><td>{amt}</td></tr>;
   }
 
   render() {
@@ -21,8 +29,8 @@ class PortfolioContainer extends Component {
     };
 
     const options = {
-      width: '300px',
-      height: '300px',
+      width: '200px',
+      height: '200px',
     };
 
     return (
@@ -31,7 +39,19 @@ class PortfolioContainer extends Component {
           <h3 className="panel-title">Optimal Allocation</h3>
         </div>
         <div className="panel-body">
-            <ChartistGraph data={data} options={options} type="Pie" />
+          <div className="col-xs-12">
+            <div className="col-xs-6">
+              <ChartistGraph data={data} options={options} type="Pie" />
+            </div>
+            <div className="col-xs-6">
+              <table className="table">
+                <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th></tr></thead>
+                <tbody>
+                  {this.state.allocation.map(this.createRow)}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -10,16 +10,22 @@ class PortfolioContainer extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    let quote = {};
+    let cost = 0;
+    let shares = 0;
     const amt = 1000000; //newProps.amount;
     const allocation = _.transform(newProps.securities, (acc, val, key) => {
-      acc.push([key, val, val / 100.0 * amt]);
+      quote = _.find(newProps.quotes, q => q.symbol === key);
+      cost = val / 100.0 * amt;
+      shares = Math.floor(cost / quote.currentPrice);
+      acc.push([key, val, cost, shares]);
     }, []);
     this.setState({ securities: newProps.securities, allocation });
   }
 
   createRow(item) {
-    const [symbol, percentage, amt] = item;
-    return <tr><td>{symbol}</td><td>{percentage}%</td><td>{amt}</td></tr>;
+    const [symbol, percentage, amt, shares] = item;
+    return <tr><td>{symbol}</td><td>{percentage}%</td><td>{amt}</td><td>{shares}</td></tr>;
   }
 
   render() {
@@ -45,7 +51,7 @@ class PortfolioContainer extends Component {
             </div>
             <div className="col-xs-6">
               <table className="table">
-                <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th></tr></thead>
+                <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th><th>Shares</th></tr></thead>
                 <tbody>
                   {this.state.allocation.map(this.createRow)}
                 </tbody>
@@ -61,9 +67,10 @@ class PortfolioContainer extends Component {
 PortfolioContainer.propTypes = {
 };
 
-function mapStateToProps({ portfolio }) {
+function mapStateToProps({ portfolio, stocks }) {
   return {
     securities: portfolio.securities,
+    quotes: stocks.quotes,
   };
 }
 

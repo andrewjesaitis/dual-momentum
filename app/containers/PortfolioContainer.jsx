@@ -6,21 +6,22 @@ import { connect } from 'react-redux';
 class PortfolioContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { securities: {}, allocation: [] };
+    this.state = { securities: {}, allocation: [], amount: 100000, leverage: 1.0};
   }
 
   componentWillReceiveProps(newProps) {
     let quote = {};
     let cost = 0;
     let shares = 0;
-    const amt = 1000000; //newProps.amount;
+    const amount = newProps.amount;
+    const leverage = newProps.leverage;
     const allocation = _.transform(newProps.securities, (acc, val, key) => {
       quote = _.find(newProps.quotes, q => q.symbol === key);
-      cost = val / 100.0 * amt;
+      cost = val / 100.0 * amount * leverage;
       shares = Math.floor(cost / quote.currentPrice);
       acc.push([key, val, cost, shares]);
     }, []);
-    this.setState({ securities: newProps.securities, allocation });
+    this.setState({ securities: newProps.securities, allocation, amount, leverage });
   }
 
   createRow(item) {
@@ -70,6 +71,8 @@ PortfolioContainer.propTypes = {
 function mapStateToProps({ portfolio, stocks }) {
   return {
     securities: portfolio.securities,
+    amount: portfolio.amount,
+    leverage: portfolio.leverage,
     quotes: stocks.quotes,
   };
 }

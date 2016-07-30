@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeContainer from '../containers/HomeContainer';
+import ValueContainer from '../containers/ValueContainer';
 import * as styles from '../styles/styles';
 
 function Navbar() {
@@ -29,9 +30,11 @@ function Navbar() {
               <a
                 href="#" className="dropdown-toggle" data-toggle="dropdown"
                 role="button" aria-haspopup="true" aria-expanded="false"
-              >Settings <span className="caret"></span></a>
+              >Portfolio Settings <span className="caret"></span></a>
               <ul className="dropdown-menu">
-                <li><a href="#">Replace with settings</a></li>
+                <div className="col-xs-12">
+                  <ValueContainer />
+                </div>
               </ul>
             </li>
           </ul>

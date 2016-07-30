@@ -22,7 +22,7 @@ function recordValue(amount, leverage) {
 // Reducer
 const initialPortfolioState = {
   securities: {},
-  amount: 0,
+  amount: 100000,
   leverage: 1.0
 };
 

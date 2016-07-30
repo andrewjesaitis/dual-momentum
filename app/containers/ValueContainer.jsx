@@ -3,12 +3,13 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { recordValue } from '../redux/portfolio';
+import Value from '../components/Value';
 
 class ValueContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { amount: 100000, leverage: 1.0 };
-    this.wrapValueUpdate = _.throttle(this.wrapValueUpdate, 700);
+    this.wrapValueUpdate = _.throttle(this.wrapValueUpdate, 1000);
   }
 
   wrapValueUpdate(amount, leverage) {
@@ -16,43 +17,31 @@ class ValueContainer extends Component {
   }
 
   handleAmountChange(event) {
-    this.setState({ amount: event.target.value });
-    this.wrapValueUpdate(event.target.value, this.state.leverage);
+    const amount = parseFloat(event.target.value);
+    this.setState({ amount });
+    this.wrapValueUpdate(amount, this.state.leverage);
   }
 
   handleLeverageChange(event) {
-    this.setState({ leverage: event.target.value });
-    this.wrapValueUpdate(this.state.amount, event.target.value);
+    const leverage = parseFloat(event.target.value);
+    this.setState({ leverage });
+    this.wrapValueUpdate(this.state.amount, leverage);
   }
 
   render() {
     return (
-      <form>
-        <div className="form-group">
-          <label htmlFor="amountInput">Amount</label>
-          <input
-            type="number"
-            className="form-control"
-            id="amountInput"
-            onChange={(event) => this.handleAmountChange(event)}
-            value={this.state.amount}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="leverageInput">Leverage</label>
-          <input
-            type="number"
-            className="form-control"
-            id="leverageInput" onChange={(event) => this.handleLeverageChange(event)}
-            value={this.state.leverage}
-          />
-        </div>
-      </form>
+      <Value
+        amount={this.state.amount}
+        leverage={this.state.leverage}
+        handleAmountChange={event => this.handleAmountChange(event)}
+        handleLeverageChange={event => this.handleLeverageChange(event)}
+      />
     );
   }
 }
 
 ValueContainer.propTypes = {
+  recordValue: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

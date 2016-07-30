@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
-import ChartistGraph from 'react-chartist';
 import { connect } from 'react-redux';
+import Portfolio from '../components/Portfolio';
 
 class PortfolioContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { securities: {}, allocation: [], amount: 100000, leverage: 1.0};
+    this.state = { securities: {}, allocation: [], amount: 100000, leverage: 1.0 };
   }
 
   componentWillReceiveProps(newProps) {
@@ -24,51 +24,10 @@ class PortfolioContainer extends Component {
     this.setState({ securities: newProps.securities, allocation, amount, leverage });
   }
 
-  createRow(item) {
-    const [symbol, percentage, amt, shares] = item;
-    return <tr><td>{symbol}</td><td>{percentage}%</td><td>{amt}</td><td>{shares}</td></tr>;
-  }
-
   render() {
-    const data = {
-      labels: _.keys(this.props.securities),
-      series: _.values(this.props.securities),
-    };
-
-    const options = {
-      width: '200px',
-      height: '200px',
-    };
-
-    return (
-      <div className="col-xs-10 col-centered">
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">Optimal Allocation</h3>
-          </div>
-          <div className="panel-body">
-            <div className="row row-centered">
-              <div className="col-sm-5 col-centered">
-                <ChartistGraph data={data} options={options} type="Pie" />
-              </div>
-              <div className="col-sm-5 col-centered">
-                <table className="table">
-                  <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th><th>Shares</th></tr></thead>
-                  <tbody>
-                    {this.state.allocation.map(this.createRow)}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <Portfolio securities={this.state.securities} allocation={this.state.allocation} />;
   }
 }
-
-PortfolioContainer.propTypes = {
-};
 
 function mapStateToProps({ portfolio, stocks }) {
   return {

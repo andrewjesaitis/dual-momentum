@@ -15,32 +15,14 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <div className="col-xs-12" style={styles.hcenter}>
-            <div className="col-xs-4">
-              <PerfContainer title={"Equites"} tickers={tickers.equities} />
-            </div>
-            <div className="col-xs-4">
-              <PerfContainer title={"Credit Risk"} tickers={tickers.credit} />
-            </div>
-          </div>
+        <div className="row row-centered">
+          <PerfContainer title={"Equites"} tickers={tickers.equities} />
+          <PerfContainer title={"Credit Risk"} tickers={tickers.credit} />
+          <PerfContainer title={"Real Estate"} tickers={tickers.realEstate} />
+          <PerfContainer title={"Economic Stress"} tickers={tickers.econ} />
         </div>
-        <div className="row">
-          <div className="col-xs-12" style={styles.hcenter}>
-            <div className="col-xs-4">
-              <PerfContainer title={"Real Estate"} tickers={tickers.realEstate} />
-            </div>
-            <div className="col-xs-4">
-              <PerfContainer title={"Economic Stress"} tickers={tickers.econ} />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-           <div className="col-xs-12" style={styles.hcenter}>
-             <div className="col-xs-8">
-               <PortfolioContainer />
-             </div>
-           </div>
+        <div className="row row-centered">
+          <PortfolioContainer />
         </div>
       </div>
     );

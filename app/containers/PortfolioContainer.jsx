@@ -41,22 +41,24 @@ class PortfolioContainer extends Component {
     };
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">Optimal Allocation</h3>
-        </div>
-        <div className="panel-body">
-          <div className="col-xs-12">
-            <div className="col-xs-6">
-              <ChartistGraph data={data} options={options} type="Pie" />
-            </div>
-            <div className="col-xs-6">
-              <table className="table">
-                <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th><th>Shares</th></tr></thead>
-                <tbody>
-                  {this.state.allocation.map(this.createRow)}
-                </tbody>
-              </table>
+      <div className="col-xs-10 col-centered">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">Optimal Allocation</h3>
+          </div>
+          <div className="panel-body">
+            <div className="row row-centered">
+              <div className="col-sm-5 col-centered">
+                <ChartistGraph data={data} options={options} type="Pie" />
+              </div>
+              <div className="col-sm-5 col-centered">
+                <table className="table">
+                  <thead><tr><th>Symbol</th><th>Percentage</th><th>Amount</th><th>Shares</th></tr></thead>
+                  <tbody>
+                    {this.state.allocation.map(this.createRow)}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

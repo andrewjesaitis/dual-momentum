@@ -7,16 +7,16 @@ const DATASETS = '/datasets';
 const DATATYPE = '.json';
 
 function calculateReturn(cur, prev) {
-  return (cur-prev)/prev;
-};
+  return (cur - prev) / prev;
+}
 
 const api = {
   getQuote(symbol) {
-    var d = new Date();
+    const d = new Date();
     d.setFullYear(d.getFullYear() - 1);
-    const oneYearAgo = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`
+    const oneYearAgo = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
     const currentUrl = URL.concat(APIVERSION, DATASETS, '/', symbol.code, DATATYPE);
-    
+
     const config = {
       params: {
         api_key: APIKEY,
@@ -26,7 +26,7 @@ const api = {
     };
     return axios.get(currentUrl, config)
       .then((res) => {
-        var ticker = symbol;
+        const ticker = symbol;
         const data = res.data.dataset.data;
         ticker.currentPrice = data[0][1];
         ticker.annualReturn = calculateReturn(ticker.currentPrice,
@@ -37,12 +37,3 @@ const api = {
 };
 
 export default api;
-
-
-
-
-
-
-
-
-

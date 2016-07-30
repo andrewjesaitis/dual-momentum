@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { recordValue } from '../redux/portfolio';
-import Value from '../components/Value';
+import Settings from '../components/Settings';
 
-class ValueContainer extends Component {
+class SettingsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { amount: 100000, leverage: 1.0 };
@@ -30,7 +30,7 @@ class ValueContainer extends Component {
 
   render() {
     return (
-      <Value
+      <Settings
         amount={this.state.amount}
         leverage={this.state.leverage}
         handleAmountChange={event => this.handleAmountChange(event)}
@@ -40,7 +40,7 @@ class ValueContainer extends Component {
   }
 }
 
-ValueContainer.propTypes = {
+SettingsContainer.propTypes = {
   recordValue: PropTypes.func.isRequired,
 };
 
@@ -55,4 +55,4 @@ function mapStateToProps({ portfolio }) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ValueContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer);

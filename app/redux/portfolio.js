@@ -1,4 +1,4 @@
-import tickers from '../config/tickers';
+import _ from 'lodash';
 
 const ADD_SECURITY = 'ADD_SECURITY';
 const RECORD_VALUE = 'RECORD_VALUE';
@@ -7,7 +7,7 @@ const RECORD_VALUE = 'RECORD_VALUE';
 function addSecurity(symbol) {
   return {
     type: ADD_SECURITY,
-    symbol
+    symbol,
   };
 }
 
@@ -15,40 +15,40 @@ function recordValue(amount, leverage) {
   return {
     type: RECORD_VALUE,
     amount,
-    leverage
+    leverage,
   };
 }
-      
+
 // Reducer
 const initialPortfolioState = {
   securities: {},
   amount: 100000,
-  leverage: 1.0
+  leverage: 1.0,
 };
 
 
 function updatePorfolio(previousSecurities, symbol) {
-  let updated = Object.assign({}, previousSecurities);
-  if(_.has(updated, symbol)){
-    _.set(updated, symbol, _.get(updated, symbol) + 25)
+  const updated = Object.assign({}, previousSecurities);
+  if (_.has(updated, symbol)) {
+    _.set(updated, symbol, _.get(updated, symbol) + 25);
   } else {
-    _.set(updated, symbol, 25)
+    _.set(updated, symbol, 25);
   }
   return updated;
 }
 
-function portfolio (state = initialPortfolioState, action) {
+function portfolio(state = initialPortfolioState, action) {
   switch (action.type) {
     case ADD_SECURITY:
       return {
         ...state,
-        securities: updatePorfolio(state.securities, action.symbol)
+        securities: updatePorfolio(state.securities, action.symbol),
       };
     case RECORD_VALUE:
       return {
         ...state,
         amount: action.amount,
-        leverage: action.leverage
+        leverage: action.leverage,
       };
     default:
       return state;

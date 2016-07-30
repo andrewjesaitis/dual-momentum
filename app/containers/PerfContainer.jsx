@@ -13,10 +13,9 @@ class PerfContainer extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('Quotes:', newProps.quotes);
-    let filtered = _.chain(newProps.quotes)
+    const filtered = _.chain(newProps.quotes)
                     .filter(q => _.includes(this.props.tickers, q.symbol))
-                    .sortBy(q => -1 * q.annualReturn) //sort descending
+                    .sortBy(q => -1 * q.annualReturn) // sort descending
                     .value();
     this.setState({ bucket: filtered });
     this.props.addSecurity(_.head(filtered).symbol);
@@ -37,7 +36,8 @@ PerfContainer.propTypes = {
   title: PropTypes.string.isRequired,
   tickers: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  quotes: PropTypes.array.isRequired
+  quotes: PropTypes.array.isRequired,
+  addSecurity: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

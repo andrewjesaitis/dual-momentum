@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeContainer from '../containers/HomeContainer';
-import ValueContainer from '../containers/ValueContainer';
+import ValueContainer from '../containers/SettingsContainer';
 import * as styles from '../styles/styles';
 
 function Navbar() {

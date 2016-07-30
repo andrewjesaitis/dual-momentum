@@ -9,10 +9,9 @@ const FETCHING_STOCKS_ERROR = 'FETCHING_STOCKS_ERROR';
 // Actions
 
 function requestStocks() {
-  console.log("Stock request in progress");
   return {
     type: FETCHING_STOCKS,
-    isFetching: true
+    isFetching: true,
   };
 }
 
@@ -21,20 +20,19 @@ function recieveQuotes(quotes) {
     type: FETCHING_STOCKS_SUCCESS,
     quotes,
     isFetching: false,
-    lastUpdated: Date.now()
-  }
+    lastUpdated: Date.now(),
+  };
 }
 
 function fetchingStocksError(error) {
   return {
     type: FETCHING_STOCKS_ERROR,
     isFetching: false,
-    error
-  }
+    error,
+  };
 }
 
 function fetchStocks() {
-  console.log("fetchStocks");
   return dispatch => {
     dispatch(requestStocks());
     return axios.all(tickers.all.map(t => api.getQuote(t)))
@@ -42,7 +40,7 @@ function fetchStocks() {
       .catch(err => dispatch(fetchingStocksError(err)));
   };
 }
-      
+
 // Reducer
 const initialStockState = {
   lastUpdated: 0,
@@ -51,25 +49,25 @@ const initialStockState = {
 };
 
 
-function stocks (state = initialStockState, action) {
+function stocks(state = initialStockState, action) {
   switch (action.type) {
     case FETCHING_STOCKS:
       return {
         ...state,
-        isFetching: action.isFetching
+        isFetching: action.isFetching,
       };
     case FETCHING_STOCKS_SUCCESS:
       return {
         ...state,
         isFetching: action.isFetching,
         quotes: action.quotes,
-        lastUpdated: action.lastUpdated
+        lastUpdated: action.lastUpdated,
       };
     case FETCHING_STOCKS_ERROR:
       return {
         ...state,
         isFetching: action.isFetching,
-        error: action.error
+        error: action.error,
       };
     default:
       return state;

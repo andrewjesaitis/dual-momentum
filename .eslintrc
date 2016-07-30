@@ -1,7 +1,12 @@
 {
   "extends": "airbnb",
+  "parserOptions": {
+     "ecmaVersion": 6,
+     "ecmaFeatures": {
+       "experimentalObjectRestSpread": true
+      }
+  },       
   "rules": {
-    "no-var": 0,
     "react/prefer-es6-class": 0,
     "react/jsx-uses-react": 1
   }   

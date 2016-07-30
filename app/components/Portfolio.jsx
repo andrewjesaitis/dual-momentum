@@ -17,7 +17,6 @@ export default class Portfolio extends Component {
   }
 
   render() {
-    console.log(this.props);
     const data = {
       labels: _.keys(this.props.securities),
       series: _.values(this.props.securities),

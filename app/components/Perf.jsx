@@ -3,7 +3,7 @@ import SymbolList from '../components/SymbolList';
 
 function Perf({ title, symbols, isLoading }) {
   return (
-    <div className="col-xs-7 col-sm-5 col-centered">
+    <div className="col-xs-10 col-sm-5 col-centered">
       <div className="panel panel-default">
         <div className="panel-heading">
           <h3 className="panel-title">{title}</h3>

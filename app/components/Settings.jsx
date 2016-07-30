@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default function Value(props) {
+export default function Settings(props) {
   return (
     <form>
       <div className="form-group">
@@ -27,7 +27,7 @@ export default function Value(props) {
   );
 }
 
-Value.propTypes = {
+Settings.propTypes = {
   amount: PropTypes.number.isRequired,
   leverage: PropTypes.number.isRequired,
   handleAmountChange: PropTypes.func.isRequired,

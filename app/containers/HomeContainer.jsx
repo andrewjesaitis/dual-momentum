@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as styles from '../styles/styles';
 import tickers from '../config/tickers';
 import PerfContainer from './PerfContainer';
 import PortfolioContainer from './PortfolioContainer';
@@ -29,13 +28,17 @@ class Home extends Component {
   }
 }
 
+Home.propTypes = {
+  fetchStocks: PropTypes.func.isRequired,
+};
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchStocks }, dispatch);
 }
 
 function mapStateToProps({ stocks }) {
   return {
-    isLoading: stocks.isFetching
+    isLoading: stocks.isFetching,
   };
 }
 

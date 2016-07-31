@@ -9,6 +9,7 @@ export default function Settings(props) {
           type="number"
           className="form-control"
           id="amountInput"
+          min="0"
           onChange={props.handleAmountChange}
           value={props.amount}
         />
@@ -19,6 +20,7 @@ export default function Settings(props) {
           type="number"
           className="form-control"
           id="leverageInput"
+          min="0"
           onChange={props.handleLeverageChange}
           value={props.leverage}
         />

@@ -13,14 +13,21 @@ class PortfolioContainer extends Component {
     let quote = {};
     let cost = 0;
     let shares = 0;
+    let totalCost = 0;
+    let totalShares = 0;
+    let totalPercent = 0;
     const amount = newProps.amount;
     const leverage = newProps.leverage;
-    const allocation = _.transform(newProps.securities, (acc, val, key) => {
+    let allocation = _.transform(newProps.securities, (acc, val, key) => {
       quote = _.find(newProps.quotes, q => q.symbol === key);
       cost = val / 100.0 * amount * leverage;
       shares = Math.floor(cost / quote.currentPrice);
       acc.push([key, val, cost, shares]);
+      totalPercent += val;
+      totalCost += cost;
+      totalShares += shares;
     }, []);
+    allocation.push(["Total", totalPercent, totalCost, totalShares]);
     this.setState({ securities: newProps.securities, allocation, amount, leverage });
   }
 

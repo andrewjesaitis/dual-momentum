@@ -42,7 +42,7 @@ export default class Portfolio extends Component {
                 <table className="table">
                   <thead><tr>
                     <th>Symbol</th>
-                    <th>Percentage</th>
+                    <th>Percent</th>
                     <th>Amount</th>
                     <th>Shares</th>
                   </tr></thead>

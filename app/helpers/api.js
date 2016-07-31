@@ -14,7 +14,7 @@ const api = {
   getQuote(symbol) {
     const d = new Date();
     d.setFullYear(d.getFullYear() - 1);
-    const oneYearAgo = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const oneYearAgo = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; // 0-indexed months
     const currentUrl = URL.concat(APIVERSION, DATASETS, '/', symbol.code, DATATYPE);
 
     const config = {

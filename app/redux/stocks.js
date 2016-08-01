@@ -46,29 +46,27 @@ const initialStockState = {
   lastUpdated: 0,
   isFetching: false,
   quotes: [],
+  error: {},
 };
 
 
 function stocks(state = initialStockState, action) {
   switch (action.type) {
     case FETCHING_STOCKS:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: action.isFetching,
-      };
+      });
     case FETCHING_STOCKS_SUCCESS:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: action.isFetching,
         quotes: action.quotes,
         lastUpdated: action.lastUpdated,
-      };
+      });
     case FETCHING_STOCKS_ERROR:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         isFetching: action.isFetching,
         error: action.error,
-      };
+      });
     default:
       return state;
   }

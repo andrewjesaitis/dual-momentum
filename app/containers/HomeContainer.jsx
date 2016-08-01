@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import tickers from '../config/tickers';
 import PerfContainer from './PerfContainer';
 import PortfolioContainer from './PortfolioContainer';
+import Error from '../components/Error';
 import { fetchStocks } from '../redux/stocks';
 
 class Home extends Component {
@@ -12,6 +13,10 @@ class Home extends Component {
   }
 
   render() {
+    if (_.has(this.props.error, 'status')) {
+      return <Error />;
+    }
+
     return (
       <div>
         <div className="row row-centered">
@@ -30,6 +35,8 @@ class Home extends Component {
 
 Home.propTypes = {
   fetchStocks: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -38,6 +45,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps({ stocks }) {
   return {
+    error: stocks.error,
     isLoading: stocks.isFetching,
   };
 }

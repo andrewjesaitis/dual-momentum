@@ -18,7 +18,10 @@ class PerfContainer extends Component {
                     .sortBy(q => -1 * q.annualReturn) // sort descending
                     .value();
     this.setState({ bucket: filtered });
-    this.props.addSecurity(_.head(filtered).symbol);
+
+    if (!_.isEmpty(filtered)) {
+      this.props.addSecurity(_.head(filtered).symbol);
+    }
   }
 
   render() {

@@ -25,3 +25,8 @@ export const symbolList = {
   padding: 0,
 };
 
+export const error = {
+  margin: '10px',
+  textAlign: 'center',
+};
+

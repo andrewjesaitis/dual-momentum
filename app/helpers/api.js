@@ -18,6 +18,9 @@ const api = {
     const currentUrl = URL.concat(APIVERSION, DATASETS, '/', symbol.code, DATATYPE);
 
     const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
       params: {
         api_key: APIKEY,
         start_date: oneYearAgo,

@@ -32,10 +32,25 @@ function fetchingStocksError(error) {
   };
 }
 
+function makeQuandlCalls() {
+  // Serially make quandl requests to deal with rate limit
+  let quotes = [];
+  let result = Promise.resolve(); // empty promise to kick off chain
+  tickers.all.forEach(ticker => {
+    result = result.then((res) => {
+      return api.getQuote(ticker).then(q => quotes.push(q));
+    })
+    .catch(err => Promise.reject(err));
+  });
+  // Return a promise containing all the quotes that resolves
+  //when the last api call finishes
+  return result.then((res) => Promise.resolve(quotes));
+}
+
 function fetchStocks() {
   return dispatch => {
     dispatch(requestStocks());
-    return axios.all(tickers.all.map(t => api.getQuote(t)))
+    return makeQuandlCalls()
       .then(quotes => dispatch(recieveQuotes(quotes)))
       .catch(err => dispatch(fetchingStocksError(err)));
   };

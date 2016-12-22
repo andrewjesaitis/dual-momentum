@@ -35,7 +35,7 @@ class Home extends Component {
 
 Home.propTypes = {
   fetchStocks: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
 

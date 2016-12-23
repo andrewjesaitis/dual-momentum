@@ -32,7 +32,11 @@ class PortfolioContainer extends Component {
   }
 
   render() {
-    return <Portfolio securities={this.state.securities} allocation={this.state.allocation} />;
+    return <Portfolio 
+             securities={this.state.securities} 
+             allocation={this.state.allocation}
+             isLoading={this.props.isLoading}
+           />;
   }
 }
 
@@ -42,6 +46,7 @@ function mapStateToProps({ portfolio, stocks }) {
     amount: portfolio.amount,
     leverage: portfolio.leverage,
     quotes: stocks.quotes,
+    isLoading: stocks.isFetching,
   };
 }
 

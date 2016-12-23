@@ -8,17 +8,20 @@ import Main from './components/Main';
 import { stocks } from './redux/stocks';
 import { portfolio } from './redux/portfolio';
 
-const loggerMiddleware = createLogger();
+let middleware = [thunkMiddleware];
+
+//Don't apply redux-logger in production
+if (process.env.NODE_ENV !== 'production') {
+  const loggerMiddleware = createLogger();
+  middleware = [...middleware, loggerMiddleware]
+}
 
 const store = createStore(
   combineReducers({
     stocks,
     portfolio,
   }),
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
+  applyMiddleware(...middleware)
 );
 
 ReactDOM.render(

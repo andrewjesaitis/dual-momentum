@@ -1,6 +1,5 @@
 import api from '../helpers/api';
 import tickers from '../config/tickers';
-import axios from 'axios';
 
 const FETCHING_STOCKS = 'FETCHING_STOCKS';
 const FETCHING_STOCKS_SUCCESS = 'FETCHING_STOCKS_SUCCESS';

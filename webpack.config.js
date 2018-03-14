@@ -31,6 +31,10 @@ module.exports = {
         loader: 'file-loader?name=/[name].[ext]',
         include: PATHS.app,
       },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
     ],
   },
   plugins: [
@@ -50,5 +54,16 @@ module.exports = {
   },
   devServer: {
     stats: 'errors-only',
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
   },
+  node : {
+  //console: 'empty',
+  fs: 'empty',
+  net: 'empty',
+  tls: 'empty'
+}
 };

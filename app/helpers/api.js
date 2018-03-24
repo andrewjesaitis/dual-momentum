@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const APIKEY = '3z1ZryQpnrCFysjv9bp_';
-const APIVERSION = '/v3';
-const URL = 'https://www.quandl.com/api';
-const DATASETS = '/datasets';
-const DATATYPE = '.json';
+const APIKEY = 'QW72YRS9QGJAAC3W';
+const URL = 'https://www.alphavantage.co/query';
+const DATAKEY = 'Time Series (Daily)';
+const CLOSEKEY = '4. close';
+const ADJCLOSEKEY = '5. adjusted close';
 
 function calculateReturn(cur, prev) {
   return (cur - prev) / prev;
@@ -12,28 +12,24 @@ function calculateReturn(cur, prev) {
 
 const api = {
   getQuote(symbol) {
-    const d = new Date();
-    d.setFullYear(d.getFullYear() - 1);
-    const oneYearAgo = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; // 0-indexed months
-    const currentUrl = URL.concat(APIVERSION, DATASETS, '/', symbol.code, DATATYPE);
-
     const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      },
       params: {
-        api_key: APIKEY,
-        start_date: oneYearAgo,
-        column_index: 4,
+        apikey: APIKEY,
+        function: 'TIME_SERIES_DAILY_ADJUSTED',
+        outputsize: 'full',
+        symbol: symbol.symbol,
       },
     };
-    return axios.get(currentUrl, config)
+    return axios.get(URL, config)
       .then((res) => {
         const ticker = symbol;
-        const data = res.data.dataset.data;
-        ticker.currentPrice = data[0][1];
-        ticker.annualReturn = calculateReturn(ticker.currentPrice,
-                                              data[data.length - 1][1]);
+        const keys = Object.keys(res.data[DATAKEY]);
+        const vals = Object.values(res.data[DATAKEY]);
+        ticker.currentDate = keys[0];
+        ticker.currentPrice = vals[0][CLOSEKEY];
+        ticker.prevDate = keys[251];
+        ticker.prevYearPrice = vals[251][ADJCLOSEKEY];
+        ticker.annualReturn = calculateReturn(ticker.currentPrice, ticker.prevYearPrice);
         return ticker;
       });
   },

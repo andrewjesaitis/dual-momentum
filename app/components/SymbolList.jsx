@@ -10,7 +10,7 @@ function SymbolList({ symbols, isLoading }) {
   return (
     <ul style={styles.symbolList}>
       {
-        symbols.map((symbol, idx) => <ListLine symbol={symbol} idx={idx} key={symbol.code} />)
+        symbols.map((symbol, idx) => <ListLine symbol={symbol} idx={idx} key={symbol.symbol} />)
        }
     </ul>
   );

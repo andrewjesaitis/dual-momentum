@@ -21,7 +21,7 @@ module.exports = {
     filename: 'index_bundle.js',
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.(jsx|js)$/, loader: 'babel-loader', include: PATHS.app },
       { test: /\.(png|jpg|svg)$/,
         loader: 'file-loader?name=/img/[name].[ext]',
@@ -43,7 +43,6 @@ module.exports = {
   ],
   resolve: {
     extensions: [
-      '',
       '.js',
       '.jsx',
     ],
